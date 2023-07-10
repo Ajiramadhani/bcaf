@@ -1,99 +1,90 @@
 <div class="container-fluid">
-    <h1>Data TroubleShoot</h1>
+    <h1>Tabel Saldo</h1>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Ticket No.</th>
-                <th scope="col">Troubleshoot Date</th>
-                <th scope="col">Trouble Category</th>
-                <th scope="col">Request by</th>
+                <th scope="col">ID Customer</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Saldo</th>
             </tr>
         </thead>
         <tbody>
             <?php $no = 1;
-            foreach ($request as $r) { ?>
+            foreach ($jml as $r) { ?>
                 <tr>
                     <td><?= $no++; ?></td>
-                    <td><?= $r['ticket_no']; ?></td>
-                    <td><?= $r['troubleshoot_date']; ?></td>
-                    <td><?= $r['troubleshoot_cat']; ?></td>
-                    <td><?= $r['request_by']; ?></td>
+                    <td><?= $r['id_cust']; ?></td>
+                    <td><?= $r['nama']; ?></td>
+                    <td><?= $r['total_uang']; ?></td>
         </tbody>
     <?php } ?>
     </table>
 
-    <div class="container-fluid">
-        <form action="<?= base_url('main/tambah_data'); ?>" method="post">
-            <h1>Tambah Data</h1>
+    <form action="<?= base_url('main/tambah_user'); ?>" method="post">
+            <h1>Tambah Data User</h1>
 
             <div class="form-group mb-2">
-                <input type="text" class="form-control" name="ticket" id="ticket" placeholder="Ticket No">
-            </div>
-            <div class="form-group mb-2">
-                <input type="date" class="form-control" name="trob_date" id="trob_date" placeholder="Trouble Date">
-            </div>
-            <div class="form-group mb-2">
-                <select class="form-control mr-sm-2" name="trob_cat" id="trob_cat">
-                    <option value="">--Pilih Kategori--</option>
-                    <option value="Outlook">Outlook</option>
-                    <option value="Microsoft Office">Microsoft Office</option>
-                    <option value="Internet">Internet</option>
-                    <option value="Printer">Printer</option>
-                </select>
-            </div>
-            <div class="form-group mb-2">
-                <select class="form-control mr-sm-2" name="req_by" id="req_by">
-                    <option value="">--Pilih User--</option>
-                    <option value="Fajar">Fajar</option>
-                    <option value="Reza">Reza</option>
-                    <option value="Yanti">Yanti</option>
-                    <option value="Ivanna">Ivanna</option>
-                    <option value="Febri">Febri</option>
-                    <option value="Riki">Riki</option>
-                    <option value="Alvin">Alvin</option>
-                </select>
+                <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama User">
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
         </form>
+
+    <div class="container-fluid">
+        <form action="<?= base_url('main/tambah_data'); ?>" method="post">
+            <h1>Tambah Data Transaksi</h1>
+
+             <div class="form-group mb-2">
+                <select class="form-control mr-sm-2" name="user" id="user">
+                    <option> -- Pilih User --</option>
+                <?php foreach ($user as $u) { ?>
+                    <option value="<?= $u['id_cust']; ?>"><?= $u['nama']; ?></option>
+                <?php } ?>
+                </select>
+            </div>
+             <div class="form-group mb-2">
+                <select class="form-control mr-sm-2" name="jenis" id="jenis">
+                    <option> -- Pilih Jenis Transaksi --</option>
+                    <option value="Debet">Debet</option>
+                    <option value="Kredit">Kredit</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2">
+                <input type="number" class="form-control" name="nominal" id="nominal" placeholder="Nominal anda">
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+
         <table class="table">
             <thead>
-                <h2>Jumlah Terbanyak by Karyawan</h2>
+                <h2>Data Transaksi User</h2>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Request by</th>
-                    <th scope="col">Jumlah</th>
+                    <th scope="col">ID Transaksi</th>
+                    <th scope="col">Nominal</th>
+                    <th scope="col">Jenis</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $no = 1;
-                foreach ($jml as $r) { ?>
+                foreach ($trans as $r) { ?>
                     <tr>
                         <td><?= $no++; ?></td>
-                        <td><?= $r['request_by']; ?></td>
-                        <td><?= $r['jumlah']; ?></td>
-                    </tr>
-                <?php }; ?>
-            </tbody>
-        </table>
-        <table class="table">
-            <thead>
-                <h2>Jumlah Terbanyak by Kategori</h2>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Kategori</th>
-                    <th scope="col">Jumlah</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1;
-                foreach ($jml_cat as $r) { ?>
-                    <tr>
-                        <td><?= $no++; ?></td>
-                        <td><?= $r['troubleshoot_cat']; ?></td>
-                        <td><?= $r['jumlah']; ?></td>
+                        <td><?= $r['cust_id']; ?></td>
+                        <td><?= $r['nominal']; ?></td>
+                        <td><?= $r['jenis']; ?></td>
+                        <td><?= date('Y-m-d h:i:s', $r['tanggal']); ?></td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="<?= base_url(); ?>main/hapus/<?= $r['id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+                        </td>
                     </tr>
                 <?php }; ?>
             </tbody>
