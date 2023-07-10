@@ -60,7 +60,8 @@
             </div>
         </form>
 
-        <table class="table">
+        
+        <table class="table" id="myTable">
             <thead>
                 <h2>Data Transaksi User</h2>
                 <tr>
